@@ -34,3 +34,5 @@ public class MainController {
     }
 }
 ```
+## start web server
+mvn spring-boot:run
