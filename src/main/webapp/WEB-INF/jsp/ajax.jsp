@@ -35,6 +35,7 @@
             <div id="response" style="text-align:center">
             </div>
         </div>
+        <h1>Angular.js example</h1>
         <div ng-app="myApp">
             <div ng-controller="exemple1Ctrl">
                 <input ng-model="age"/>
