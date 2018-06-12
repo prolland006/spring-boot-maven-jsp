@@ -2,10 +2,15 @@ package com.testmaven.testmaven;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.testmaven.testmaven.model.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 
@@ -17,7 +22,6 @@ public class TestmavenApplication {
     public String sayHello() {
         return "hello world";
     }
-
 
     @RequestMapping("/ajax")
     public ModelAndView helloAjaxTest() {
@@ -41,6 +45,27 @@ public class TestmavenApplication {
         return jsonInString;
     }
 
+    // user page
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public ModelAndView user(Model model) {
+
+        User user = new User();
+        user.setName("toto");
+        model.addAttribute("user", user);
+        return new ModelAndView("user", "command", user);
+    }
+
+    @RequestMapping(value = "/postuser", method = RequestMethod.POST)
+    public String saveOrUpdateUser(@ModelAttribute("userForm") @Validated User user,
+                                   BindingResult result, Model model, final RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            return "redirect:/user/";
+        } else {
+            return "redirect:/user/";
+        }
+
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(TestmavenApplication.class, args);
